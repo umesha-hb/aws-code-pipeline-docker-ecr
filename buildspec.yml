@@ -14,7 +14,7 @@ phases:
     commands:
       - echo build stated on 'date'
       - echo building the Docker image...
-      - docker build -t $REPOSITORY_URI:latest
+      - docker build -t $REPOSITORY_URI:latest .
       - docker tag $REPOSITORY_URI:latest $REPOSITORY_URI:$IMAGE_TAG
   post_build:
     commands:
@@ -25,9 +25,8 @@ phases:
       - echo Writing image definitions file...
       - printf '[{"name":"aws-code-pipeline-docker-ecr","imageUri":"%s"}]' $REPOSITORY_URI:$IMAGE_TAG > imageDetail.json
       - cat imageDetail.json
-
-    artifacts:
-      files:
-        - imageDetail.json
-        - target/aws-code-pipeline-docker-ecr.jar
+  artifacts:
+    files:
+      - imageDetail.json
+      - target/aws-code-pipeline-docker-ecr.jar
 

@@ -1,3 +1,4 @@
+
 FROM golang:1.12-alpine AS build
 #Install git
 RUN apk add --no-cache git
@@ -11,7 +12,6 @@ FROM golang:1.12-alpine
 #Copy the build's output binary from the previous build container
 COPY --from=build /bin/HelloWorld /bin/HelloWorld
 ENTRYPOINT ["/bin/HelloWorld"]
-
 FROM openjdk:11
 EXPOSE 8080
 ADD target/aws-code-pipeline-docker-ecr.jar aws-code-pipeline-docker-ecr.jar

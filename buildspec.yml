@@ -1,0 +1,32 @@
+version: 0.2
+
+phases:
+  pre_build:
+    commands:
+      - mvn clean install
+      - echo Logging in to Amazon ECR...
+      - aws --version
+      - $(aws ecr get login --region $AWS_DEFAULT_REGION --no-include-email)
+      - RESPOSITORY_URI=719872330848.dkr.ecr.ap-south-1.amazonaws.com/uttara-registry
+      - COMMIT_HASH=$(echo $CODEBUILD_RESOlVED_SOURCE_VERSION | cut -c 1-7)
+      - IMAGE_TAG=build-$(echo $CODEBUILD_BUILD_ID | awk -F":" '{print $2}')
+    build:
+      commands:
+        - echo build stated on 'date'
+        - echo building the Docker image...
+        - docker build -t $RESPOSITORY_URI:latest
+        - docker tag $RESPOSITORY_URI:latest $RESPOSITORY_URI:$IMAGE_TAG
+    post_build:
+      commands:
+        - echo build completed on 'date'
+        - echo pushing the docker image...
+        - docker push $RESPOSITORY_URI:latest
+        - docker push $RESPOSITORY_URI:$IMAGE_TAG
+        - echo Writing image definitions file...
+        - printf '[{"name":"aws-code-pipeline-docker-ecr","imageUri":"%s"}]' $RESPOSITORY_URI:$IMAGE_TAG > imagedefintions.json
+        - cat imagedefintions.json
+      artifacts:
+        files:
+          - imagedefintions.json
+          - target/aws-code-pipeline-docker-ecr.jar
+      display_path: yes

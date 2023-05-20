@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.1.0</version>
+        <version>2.7.11</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.uttara</groupId>
@@ -14,7 +14,7 @@
     <name>aws-code-pipeline-docker-ecr</name>
     <description>aws-code-pipeline-docker-ecr</description>
     <properties>
-        <java.version>17</java.version>
+        <java.version>11</java.version>
     </properties>
     <dependencies>
         <dependency>
@@ -49,6 +49,7 @@
                 </configuration>
             </plugin>
         </plugins>
+        <finalName>aws-code-pipeline-docker-ecr</finalName>
     </build>
 
 </project>

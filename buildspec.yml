@@ -14,14 +14,13 @@ phases:
       commands:
         - echo build stated on 'date'
         - echo building the Docker image...
-        - docker build -t $RESPOSITORY_URI:latest
-        - docker tag $RESPOSITORY_URI:latest $RESPOSITORY_URI:$IMAGE_TAG
+        - docker build -t $RESPOSITORY_URI:$IMAGE_TAG .
+        - docker tag $RESPOSITORY_URI:$IMAGE_TAG $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$RESPOSITORY_URI:$IMAGE_TAG
     post_build:
       commands:
         - echo build completed on 'date'
         - echo pushing the docker image...
-        - docker push $RESPOSITORY_URI:latest
-        - docker push $RESPOSITORY_URI:$IMAGE_TAG
+        - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$RESPOSITORY_URI:$IMAGE_TAG
         - echo Writing image definitions file...
         - printf '[{"name":"aws-code-pipeline-docker-ecr","imageUri":"%s"}]' $RESPOSITORY_URI:$IMAGE_TAG > imagedefintions.json
         - cat imagedefintions.json

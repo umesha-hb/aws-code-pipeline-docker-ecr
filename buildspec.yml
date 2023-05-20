@@ -14,8 +14,8 @@ phases:
     commands:
       - echo build stated on 'date'
       - echo building the Docker image...
-      - docker build $RESPOSITORY_URI:latest
-      - docker tag $RESPOSITORY_URI:latest $RESPOSITORY_URI:$IMAGE_TAG
+      - docker build 719872330848.dkr.ecr.ap-south-1.amazonaws.com/uttara-registry:latest
+      - docker tag 719872330848.dkr.ecr.ap-south-1.amazonaws.com/uttara-registry:latest 719872330848.dkr.ecr.ap-south-1.amazonaws.com/uttara-registry:$IMAGE_TAG
   post_build:
     commands:
       - echo build completed on 'date'

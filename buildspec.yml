@@ -3,8 +3,7 @@ version: 0.2
 phases:
   install:
     runtime-versions:
-      docker: 23.0.5
-      java: corretto8
+       golang: 1.13
 
   pre_build:
     commands:

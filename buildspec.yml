@@ -1,11 +1,6 @@
 version: 0.2
 
 phases:
-  install:
-    runtime-versions:
-      docker: latest
-      java: corretto8
-
   pre_build:
     commands:
       - echo Logging in to Amazon ECR...

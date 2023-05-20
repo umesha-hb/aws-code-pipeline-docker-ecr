@@ -6,23 +6,22 @@ phases:
       - echo Logging in to Amazon ECR...
       - aws --version
       - aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 719872330848.dkr.ecr.ap-south-1.amazonaws.com
-      - RESPOSITORY_URI=719872330848.dkr.ecr.ap-south-1.amazonaws.com/uttara-registry
+      - REPOSITORY_URI=719872330848.dkr.ecr.ap-south-1.amazonaws.com/uttara-registry
       - COMMIT_HASH=$(echo $CODEBUILD_RESOlVED_SOURCE_VERSION | cut -c 1-7)
       - IMAGE_TAG=build-$(echo $CODEBUILD_BUILD_ID | awk -F":" '{print $2}')
 
   build:
     commands:
       - echo build stated on 'date'
-      - echo $IMAGE_URI
-      - mvn clean package -Ddockerfile.skip
-      - docker build 719872330848.dkr.ecr.ap-south-1.amazonaws.com/uttara-registry:latest
-      - docker tag 719872330848.dkr.ecr.ap-south-1.amazonaws.com/uttara-registry:latest 719872330848.dkr.ecr.ap-south-1.amazonaws.com/uttara-registry:$IMAGE_TAG
+      - echo building the Docker image...
+      - docker build $REPOSITORY_URI:latest
+      - docker tag $REPOSITORY_URI:latest $REPOSITORY_URI:$IMAGE_TAG
   post_build:
     commands:
       - echo build completed on 'date'
       - echo pushing the docker image...
-      - docker push $RESPOSITORY_URI:latest
-      - docker push $RESPOSITORY_URI:$IMAGE_TAG
+      - docker push $REPOSITORY_URI:latest
+      - docker push $REPOSITORY_URI:$IMAGE_TAG
       - echo Writing image definitions file...
       - printf '[{"name":"aws-code-pipeline-docker-ecr","imageUri":"%s"}]' $RESPOSITORY_URI:$IMAGE_TAG > imagedefintions.json
       - cat imagedefintions.json

@@ -23,7 +23,7 @@ phases:
       - docker push $REPOSITORY_URI:latest
       - docker push $REPOSITORY_URI:$IMAGE_TAG
       - echo Writing image definitions file...
-      - printf '[{"name":"aws-code-pipeline-docker-ecr","imageUri":"%s"}]' $RESPOSITORY_URI:$IMAGE_TAG > imagedefintions.json
+      - printf '[{"name":"aws-code-pipeline-docker-ecr","imageUri":"%s"}]' $REPOSITORY_URI:$IMAGE_TAG > imagedefintions.json
       - cat imagedefintions.json
       -
     artifacts:

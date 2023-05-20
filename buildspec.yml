@@ -5,7 +5,7 @@ phases:
     commands:
       - echo Logging in to Amazon ECR...
       - aws --version
-      - $password = aws ecr get-login-password --region ap-south-1
+      - $password := aws ecr get-login-password --region ap-south-1
       - docker login --username AWS --password $password 719872330848.dkr.ecr.ap-south-1.amazonaws.com
       - RESPOSITORY_URI=719872330848.dkr.ecr.ap-south-1.amazonaws.com/uttara-registry
       - COMMIT_HASH=$(echo $CODEBUILD_RESOlVED_SOURCE_VERSION | cut -c 1-7)

@@ -14,7 +14,7 @@ phases:
     commands:
       - echo build stated on 'date'
       - echo building the Docker image...
-      - docker build $REPOSITORY_URI:latest
+      - docker build -t $REPOSITORY_URI:latest
       - docker tag $REPOSITORY_URI:latest $REPOSITORY_URI:$IMAGE_TAG
   post_build:
     commands:
@@ -31,4 +31,3 @@ phases:
         - imageDetail.json
         - target/aws-code-pipeline-docker-ecr.jar
 
-    display_path: yes

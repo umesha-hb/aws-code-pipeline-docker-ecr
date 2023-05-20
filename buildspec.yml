@@ -13,7 +13,8 @@ phases:
   build:
     commands:
       - echo build stated on 'date'
-      - echo building the Docker image...
+      - echo $IMAGE_URI
+      - mvn clean package -Ddockerfile.skip
       - docker build 719872330848.dkr.ecr.ap-south-1.amazonaws.com/uttara-registry:latest
       - docker tag 719872330848.dkr.ecr.ap-south-1.amazonaws.com/uttara-registry:latest 719872330848.dkr.ecr.ap-south-1.amazonaws.com/uttara-registry:$IMAGE_TAG
   post_build:

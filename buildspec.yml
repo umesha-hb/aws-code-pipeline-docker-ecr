@@ -1,6 +1,10 @@
 version: 0.2
 
 phases:
+  install:
+    commands:
+      - pip3 install -q awscli --upgrade --user
+      - yum -q install -y jq
   pre_build:
     commands:
       - echo Logging in to Amazon ECR...
